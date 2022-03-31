@@ -1,0 +1,152 @@
+@import './variables';
+
+.@{prefix-cls} {
+  &-dialog {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .ReactVirtualized__List {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      overflow: -moz-scrollbars-none;
+
+      -ms-overflow-style: none;
+    }
+  }
+
+  &-header {
+    padding: 0 8px;
+    background-color: #f0f0f0;
+
+    &-menu {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      &-item {
+        display: inline-block;
+
+        > div {
+          //cursor: pointer;
+        }
+
+        &-active {
+          background: #fff;
+        }
+      }
+    }
+  }
+
+  &-search {
+    padding: 8px 16px;
+    border: 0 solid rgba(0, 0, 0, 0.06);
+    border-bottom-width: 1px;
+
+    &-input {
+      width: 100%;
+      height: 30px;
+      padding: 6px;
+      font-size: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 4px;
+      outline: none;
+    }
+  }
+
+  &-body {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    &-head {
+      display: table;
+      padding: 8px 16px 0;
+
+      > * {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      &-title {
+        color: #444;
+        font-weight: normal;
+        font-size: 14px;
+        font-family: sans-serif;
+      }
+
+      &-decoration {
+        text-align: right;
+      }
+    }
+  }
+
+  &-modifiers {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    vertical-align: middle;
+    list-style: none;
+
+    li {
+      display: inline-block;
+      padding: 0 2px;
+
+      &:last-of-type {
+        padding-right: 0;
+      }
+
+      &:hover {
+        transform: scale(1.2);
+        transition-duration: 200ms;
+      }
+    }
+
+    &-item {
+      position: relative;
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border-radius: 10px;
+
+      &-active::after {
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        display: block;
+        box-sizing: unset;
+        width: 7px;
+        height: 7px;
+        border: 2px solid #fff;
+        border-radius: 10px;
+        content: '';
+      }
+    }
+  }
+
+  &-emoji-row {
+    display: inline-flex;
+    flex-direction: row;
+    align-content: center;
+    padding-left: 8px;
+  }
+
+  &-emoji-item {
+    .joypixels {
+      top: 0;
+      margin: 0;
+    }
+
+    &:hover {
+      background: #f5f7f9;
+    }
+  }
+}

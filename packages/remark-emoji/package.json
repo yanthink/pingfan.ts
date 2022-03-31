@@ -1,0 +1,43 @@
+{
+  "name": "@pingfan.ts/remark-emoji",
+  "version": "1.0.0",
+  "description": "emoji-toolkit remark plugin",
+  "author": "yanthink <yanthink911@qq.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib",
+    "src",
+    "es"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yanthink/pingfan.ts.git"
+  },
+  "keywords": [
+    "react",
+    "emoji",
+    "emoji-toolkit",
+    "emojione",
+    "remark-plugin"
+  ],
+  "peerDependencies": {
+    "emoji-toolkit": "^6.6.0"
+  },
+  "dependencies": {
+    "emoji-toolkit": "^6.6.0",
+    "mdast-util-find-and-replace": "^2.1.0"
+  }
+}

@@ -1,0 +1,76 @@
+@import './variables';
+
+.@{prefix-cls} {
+  &-container {
+    background: #fff;
+    border: 1px solid @border-color;
+    border-radius: 4px;
+
+    &:not(.@{prefix-cls}-full-screen) {
+      .cm-gutters,
+      .cm-scroller {
+        //min-height: 300px !important;
+      }
+    }
+  }
+
+  &-hidden {
+    display: none;
+  }
+
+  &-editor-container,
+  &-preview-container {
+    height: 100%;
+  }
+
+  &-editor-preview {
+    border-left: 1px solid @border-color;
+  }
+
+  &-full-screen {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: auto;
+
+    .@{prefix-cls}-body {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+    }
+
+    .@{prefix-cls}-editor-container,
+    .@{prefix-cls}-preview-container {
+      position: relative;
+      flex: 1;
+    }
+
+    .cm-editor {
+      position: absolute !important;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: auto;
+      height: auto;
+    }
+  }
+}
+
+.cm-editor {
+  &.cm-focused {
+    outline: none !important;
+  }
+
+  .cm-gutters {
+    .cm-gutterElement:last-child {
+      margin-bottom: 4px;
+    }
+  }
+}

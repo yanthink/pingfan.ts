@@ -1,0 +1,57 @@
+@import './variables';
+
+.@{prefix-cls} {
+  &-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 12px;
+    background: #fff;
+    border-bottom: 1px solid @border-color;
+    user-select: none;
+
+    * {
+      box-sizing: border-box;
+    }
+
+    &-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+    }
+  }
+
+  &-button {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    padding: 7px;
+    color: #333;
+    line-height: 1;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    cursor: pointer;
+
+    &:hover {
+      background: #f5f5f5;
+    }
+
+    &-active {
+      background: #fcfcfc;
+      border-color: @border-color;
+    }
+
+    .anticon {
+      font-size: 16px;
+      line-height: 0;
+    }
+  }
+
+  &-divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    margin: 6px 8px;
+    background: @border-color;
+  }
+}

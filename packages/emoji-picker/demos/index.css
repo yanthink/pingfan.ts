@@ -1,0 +1,18 @@
+.container {
+  padding: 20px;
+}
+
+.preview {
+  margin-top: 20px;
+}
+
+.preview > div {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.container .joypixels {
+  margin: 0;
+  top: 0;
+}

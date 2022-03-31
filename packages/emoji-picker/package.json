@@ -35,8 +35,8 @@
     "emojione"
   ],
   "peerDependencies": {
-    "react": ">= 16.8.0",
-    "emoji-toolkit": "^6.6.0"
+    "emoji-toolkit": "^6.6.0",
+    "react": ">= 16.8.0"
   },
   "dependencies": {
     "classnames": "^2.3.1",

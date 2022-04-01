@@ -3,9 +3,7 @@ import { EditorView, basicSetup } from '@codemirror/basic-setup';
 import Editor, { EditorInstance } from '@pingfan.ts/markdown-editor';
 import upload from '@pingfan.ts/markdown-editor/es/plugins/upload';
 import scrollSync from '@pingfan.ts/markdown-editor/es/plugins/scroll-sync';
-// @ts-ignore
 import markdown from './markdown.txt';
-import './index.css';
 
 export default () => {
   const editorRef = useRef<EditorInstance | null>(null);
@@ -30,6 +28,7 @@ export default () => {
   return (
     <Editor
       ref={editorRef}
+      height={300}
       value={value}
       onChange={setValue}
       extensions={extensions}

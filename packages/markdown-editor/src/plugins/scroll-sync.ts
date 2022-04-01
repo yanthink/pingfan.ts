@@ -52,10 +52,10 @@ function getOffsetTop(el: HTMLElement, parentEl: Element) {
 }
 
 export default (editorRef: MutableRefObject<EditorInstance | null>, previewInterval = 1000) => {
-  let scrollToSelectionFlag = false;
-  let lastScrollLineNumber = 0;
+  let lastCursorLineNumber = -1;
+  let lockScrollEvent = false;
+  let lastScrollLineNumber = -1;
 
-  // todo marginTop
   function scrollToLine(children: any[], line: Line, marginTop = 0, el?: Element): void {
     const view = editorRef.current!.getEditorView()!;
     const preview = editorRef.current!.getPreview()!;
@@ -181,7 +181,7 @@ export default (editorRef: MutableRefObject<EditorInstance | null>, previewInter
     if (value !== preview.getMarkdown()) return;
 
     const hast = preview.getHast();
-    const line = getNonBlankLine(view, state.doc.lineAt(state.selection.main.from));
+    const line = getNonBlankLine(view, state.doc.lineAt(state.selection.main.head));
     // todo 换行的可能不太精准
     const marginTop = /^\s*$/.test(state.sliceDoc(line.to))
       ? 0
@@ -200,23 +200,32 @@ export default (editorRef: MutableRefObject<EditorInstance | null>, previewInter
 
     if (!view || !preview) return;
 
+    const { state } = view;
+
     const value = view.state.doc.toString();
     if (value !== preview.getMarkdown()) return;
 
     const hast = preview.getHast();
     // 可见区域第一行
     const blockInfo = view.lineBlockAtHeight(view.scrollDOM.scrollTop);
-    const line = getNonBlankLine(view, view.state.doc.lineAt(blockInfo.from));
+    const visibleFirstLine = state.doc.lineAt(blockInfo.from);
+    const line = getNonBlankLine(view, visibleFirstLine);
 
     if (lastScrollLineNumber !== line.number) {
-      scrollToLine(hast.children, line, view.scrollDOM.scrollTop - blockInfo.top);
+      const marginTop = /^\s*$/.test(visibleFirstLine.text) ? 0 : view.scrollDOM.scrollTop - blockInfo.top;
+      scrollToLine(hast.children, line, marginTop);
+      lastScrollLineNumber = -1; // 让每次滚动事件都执行
     }
   }, 300);
 
   return [
     EditorView.updateListener.of((viewUpdate) => {
       if (viewUpdate.selectionSet && editorRef.current?.getDisplayMode().editorPreview) {
-        scrollToSelectionFlag = true;
+        const { state } = viewUpdate;
+        const cursorLineNumber = state.doc.lineAt(state.selection.main.head).number;
+        lockScrollEvent = viewUpdate.docChanged && cursorLineNumber !== lastCursorLineNumber;
+        lastCursorLineNumber = cursorLineNumber;
+
         handleDebounceScroll.cancel();
 
         if (viewUpdate.docChanged) {
@@ -229,12 +238,12 @@ export default (editorRef: MutableRefObject<EditorInstance | null>, previewInter
     }),
     EditorView.domEventHandlers({
       scroll() {
-        if (!scrollToSelectionFlag && editorRef.current?.getDisplayMode().editorPreview) {
+        if (!lockScrollEvent && editorRef.current?.getDisplayMode().editorPreview) {
           handleDebounceScrollToSelection.cancel();
           handleDebounceScroll();
         }
 
-        scrollToSelectionFlag = false;
+        lockScrollEvent = false;
       },
     }),
   ];

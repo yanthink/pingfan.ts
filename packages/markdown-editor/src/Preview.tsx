@@ -18,6 +18,8 @@ export interface PreviewInstance {
 
   debounceSetMarkdown(markdown: string): void;
 
+  setMarkdownOptions(markdownOptions: Partial<ReactMarkdownOptions>): void;
+
   getContainer(): HTMLDivElement | null;
 
   getHast(): any;
@@ -49,7 +51,7 @@ export interface PreviewProps {
   /**
    * @description [react-markdown 选项](https://github.com/remarkjs/react-markdown)
    */
-  markdownOptions?: ReactMarkdownOptions;
+  markdownOptions?: Partial<ReactMarkdownOptions>;
 }
 
 const Preview = forwardRef<PreviewInstance, PreviewProps>((props, ref) => {
@@ -60,10 +62,10 @@ const Preview = forwardRef<PreviewInstance, PreviewProps>((props, ref) => {
     interval = 1000,
     remarkPlugins = [],
     rehypePlugins = [],
-    markdownOptions,
   } = props;
 
   const [markdown, setMarkdown] = useState('');
+  const [markdownOptions, setMarkdownOptions] = useState<Partial<ReactMarkdownOptions>>(props.markdownOptions || {});
 
   const debounceSetMarkdown = useMemo(() => debounce(setMarkdown, interval), [interval]);
 
@@ -75,6 +77,7 @@ const Preview = forwardRef<PreviewInstance, PreviewProps>((props, ref) => {
       getMarkdown: () => markdown,
       setMarkdown,
       debounceSetMarkdown,
+      setMarkdownOptions,
       getContainer: () => containerRef.current,
       getHast: () => hastRef.current,
     }),
@@ -146,6 +149,6 @@ const Preview = forwardRef<PreviewInstance, PreviewProps>((props, ref) => {
 export default React.memo(Preview, (prevProps, nextProps) => {
   return (
     !nextProps.shouldUpdate ||
-    (prevProps.render === nextProps.render && prevProps.interval === nextProps.interval)
+    (prevProps.interval === nextProps.interval)
   );
 });

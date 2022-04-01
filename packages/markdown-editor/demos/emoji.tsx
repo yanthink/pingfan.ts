@@ -102,6 +102,7 @@ export default () => {
       ref={editorRef}
       value={value}
       onChange={setValue}
+      minHeight={300}
       extensions={extensions}
       toolbar={{
         buttons: [

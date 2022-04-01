@@ -5,7 +5,7 @@ export default (editorViewRef: MutableRefObject<EditorView | null>, storageKey?:
   const backup = useCallback(() => {
     if (storageKey) {
       const value = editorViewRef.current?.state.doc.toString() || '';
-      if (value.length > 0 && !/^\s|\r?\n$/.test(value)) {
+      if (value.length > 0 && !/^(\s|\r?\n)*$/.test(value)) {
         localStorage.setItem(storageKey, value);
       } else {
         localStorage.removeItem(storageKey);

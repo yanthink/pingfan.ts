@@ -6,7 +6,7 @@ import useDisplayMode from './hooks/useDisplayMode';
 import useBackup from './hooks/useBackup';
 import * as commands from './commands';
 import Toolbar, { ToolbarInstance, ToolbarProps, BuiltInButton } from './Toolbar';
-import Preview, { PreviewInstance } from './Preview';
+import Preview, { PreviewInstance, PreviewProps as PreviewOptions } from './Preview';
 import './Editor.less';
 
 export interface EditorInstance {
@@ -38,30 +38,17 @@ export interface EditorProps extends Omit<UseCodeMirrorProps, 'containerRef' | '
   toolbar?:
     | false
     | {
-        buttons: ToolbarProps['buttons'];
-      };
+    buttons: ToolbarProps['buttons'];
+  };
+  /**
+   * @description 编辑预览启用全屏，一般和 `height` 搭配使用
+   * @default true
+   */
+  editorPreviewEnableFullScreen?: boolean;
   /**
    * @description 预览选项
    */
-  previewOptions?: {
-    /**
-     * @description  刷新间隔(ms)
-     * @default 1000
-     */
-    interval?: number;
-    /**
-     * @description 自定义渲染
-     */
-    render?(markdown: string): React.ReactNode;
-    /**
-     * @description remark 插件
-     */
-    remarkPlugins?: import('unified').PluggableList;
-    /**
-     * @description rehype 插件
-     */
-    rehypePlugins?: import('unified').PluggableList;
-  };
+  previewOptions?: PreviewOptions;
   /**
    * @description 自动保存，下次初始化时可恢复上一次保存的内容
    */
@@ -73,8 +60,8 @@ const Editor = forwardRef<EditorInstance, EditorProps>((props, ref) => {
   const toolbarRef = useRef<ToolbarInstance>(null);
   const previewRef = useRef<PreviewInstance>(null);
 
-  const { height = '', minHeight = '', maxHeight = '' } = props;
-  const { toolbar, previewOptions, storageKey, ...useCodeMirrorProps } = props;
+  const { height, minHeight, maxHeight } = props;
+  const { toolbar, editorPreviewEnableFullScreen, previewOptions, storageKey, ...useCodeMirrorProps } = props;
 
   const editorViewRef = useCodeMirror({
     ...useCodeMirrorProps,
@@ -88,7 +75,7 @@ const Editor = forwardRef<EditorInstance, EditorProps>((props, ref) => {
       }
     },
   });
-  const [displayModeRef, toggleFullScreen, togglePreview, toggleEditorPreview] = useDisplayMode();
+  const [displayModeRef, toggleFullScreen, togglePreview, toggleEditorPreview] = useDisplayMode({}, editorPreviewEnableFullScreen);
   const { fullScreen, preview, editorPreview } = displayModeRef.current;
 
   useBackup(editorViewRef, storageKey);
@@ -163,7 +150,18 @@ const Editor = forwardRef<EditorInstance, EditorProps>((props, ref) => {
   };
 
   return (
-    <div className={classnames('pf-mde-container', { 'pf-mde-full-screen': fullScreen })}>
+    <div
+      className={
+        classnames('pf-mde-container', {
+          'pf-mde-full-screen': fullScreen,
+          'pf-mde-full-screen-mode': fullScreen,
+          'pf-mde-editor-preview': editorPreview,
+          'pf-mde-editor-preview-mode': editorPreview,
+          'pf-mde-preview': preview,
+          'pf-mde-preview-mode': preview,
+        })
+      }
+    >
       {toolbar !== false && (
         <Toolbar ref={toolbarRef} {...toolbarProps} onButtonClick={handleToolbarButtonClick} />
       )}
@@ -176,7 +174,6 @@ const Editor = forwardRef<EditorInstance, EditorProps>((props, ref) => {
         />
         <div
           className={classnames('pf-mde-preview-container', {
-            'pf-mde-editor-preview': editorPreview,
             'pf-mde-hidden': !preview && !editorPreview,
           })}
         >

@@ -17,8 +17,8 @@ import PictureOutlined from '@ant-design/icons/PictureOutlined';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import SplitCellsOutlined from '@ant-design/icons/SplitCellsOutlined';
 import FullscreenOutlined from '@ant-design/icons/FullscreenOutlined';
-import CodeSvg from './svg/code.svg';
-import QuoteSvg from './svg/quote.svg';
+import CodeSvg from './svg/code';
+import QuoteSvg from './svg/quote';
 import * as commands from './commands';
 import './Toolbar.less';
 

@@ -5,13 +5,6 @@
     background: #fff;
     border: 1px solid @border-color;
     border-radius: 4px;
-
-    &:not(.@{prefix-cls}-full-screen) {
-      .cm-gutters,
-      .cm-scroller {
-        //min-height: 300px !important;
-      }
-    }
   }
 
   &-hidden {
@@ -23,11 +16,25 @@
     height: 100%;
   }
 
-  &-editor-preview {
-    border-left: 1px solid @border-color;
+  &-full-screen-mode,
+  &-editor-preview-mode {
+    .@{prefix-cls}-body {
+      display: flex;
+      flex: 1;
+      flex-direction: row;
+    }
+
+    .@{prefix-cls}-preview-container {
+      border-left: 1px solid @border-color;
+    }
+
+    .@{prefix-cls}-editor-container,
+    .@{prefix-cls}-preview-container {
+      flex: 1;
+    }
   }
 
-  &-full-screen {
+  &-full-screen-mode {
     position: fixed;
     top: 0;
     right: 0;
@@ -39,16 +46,9 @@
     width: auto;
     height: auto;
 
-    .@{prefix-cls}-body {
-      display: flex;
-      flex: 1;
-      flex-direction: row;
-    }
-
     .@{prefix-cls}-editor-container,
     .@{prefix-cls}-preview-container {
       position: relative;
-      flex: 1;
     }
 
     .cm-editor {
@@ -58,7 +58,7 @@
       bottom: 0;
       left: 0;
       width: auto;
-      height: auto;
+      height: 100%;
     }
   }
 }

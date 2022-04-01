@@ -70,15 +70,26 @@ export default () => {
 | 属性名 | 描述 | 类型 | 默认值	|
 | --- | --- | --- | --- |
 | toolbar | 工具条 | <code>false &#124; { buttons: ToolbarButton[]; }</code> | -- |
-| previewOptions | 预览选项 | `{ interval?: number; render?(markdown: string): ReactNode; remarkPlugins?: PluggableList; rehypePlugins?: PluggableList; }` | -- |
+| editorPreviewEnableFullScreen | 编辑预览启用全屏，一般和 `height` 搭配使用 | `boolean` | true |
+| previewOptions | 预览选项 | `PreviewOptions` | -- |
 | storageKey | 自动保存，下次初始化时可恢复上一次保存的内容 | `string` | -- |
 | value | 编辑器内容 | `string` | -- |
-| height | 高度 | `string` | -- |
-| minHeight | 最小高度 | `string` | -- |
-| maxHeight | 最大高度 | `string` | -- |
+| height | 高度 | <code>number &#124; string</code> | -- |
+| minHeight | 最小高度 | <code>number &#124; string</code> | -- |
+| maxHeight | 最大高度 | <code>number &#124; string</code> | -- |
 | extensions | [codemirror 扩展](https://codemirror.net/6/) | `Extension[]` | -- |
 | onChange | 内容变化时的回调 | `(value: string) => void` | -- |
 | ref | -- | `Ref<EditorInstance>` | -- |
+
+#### PreviewOptions
+
+| 属性名 | 描述 | 类型 | 默认值	|
+| --- | --- | --- | --- |
+| render | 自定义渲染 | `(markdown: string) => ReactNode` | -- |
+| interval | 刷新间隔 | `number` | 1000 |
+| remarkPlugins | [remark 插件](https://github.com/remarkjs/react-markdown#plugins) | `PluggableList` | -- |
+| rehypePlugins | [rehype 插件](https://github.com/remarkjs/react-markdown#plugins) | `PluggableList` | -- |
+| markdownOptions | [react-markdown 选项](https://github.com/remarkjs/react-markdown) | `Partial<ReactMarkdownOptions>` | -- |
 
 #### EditorInstance
 
@@ -100,7 +111,8 @@ export default () => {
 | getMarkdown | 获取 markdown 内容 | `() => string` |
 | setMarkdown | 设置 markdown 内容 | `(markdown: string) => void` |
 | debounceSetMarkdown | 消抖设置 markdown 内容 | `(markdown: string) => void` |
+| setMarkdownOptions | 设置 [react-markdown 选项](https://github.com/remarkjs/react-markdown) | `(markdownOptions: Partial<ReactMarkdownOptions>) => void` |
 | getContainer | 获取预览容器DOM | <code>() => HTMLDivElement &#124; null</code> |
-| getHast | 获取hast | () => Hast | 
+| getHast | 获取hast | `() => Hast` | 
 
 

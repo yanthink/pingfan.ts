@@ -12,6 +12,7 @@ type ToggleEditorPreview = (editorPreview?: boolean) => boolean;
 
 export default (
   state?: Partial<DisplayMode>,
+  editorPreviewEnableFullScreen: boolean = true,
 ): [MutableRefObject<DisplayMode>, ToggleFullScreen, TogglePreview, ToggleEditorPreview] => {
   const displayModeRef = useRef<DisplayMode>({
     fullScreen: false,
@@ -25,7 +26,7 @@ export default (
   const toggleFullScreen: ToggleFullScreen = (fullScreen) => {
     fullScreen ??= !displayModeRef.current.fullScreen;
     const preview = displayModeRef.current.preview;
-    const editorPreview = false;
+    const editorPreview = editorPreviewEnableFullScreen ? false : displayModeRef.current.editorPreview;
 
     displayModeRef.current = { fullScreen, preview, editorPreview };
     setModeState(displayModeRef.current);
@@ -44,7 +45,7 @@ export default (
 
   const toggleEditorPreview: ToggleEditorPreview = (editorPreview) => {
     editorPreview ??= !displayModeRef.current.editorPreview;
-    const fullScreen = true;
+    const fullScreen = editorPreviewEnableFullScreen;
     const preview = false;
 
     displayModeRef.current = { fullScreen, preview, editorPreview };

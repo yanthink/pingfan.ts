@@ -1,9 +1,3 @@
-.pf-mde-container:not(.pf-mde-full-screen) .cm-gutters,
-.pf-mde-container:not(.pf-mde-full-screen) .cm-scroller,
-.pf-mde-container:not(.pf-mde-full-screen) .pf-mde-preview-content {
-  min-height: 300px !important;
-}
-
 .pf-mde-preview-content .joypixels {
   transform: scale(.5, .5);
   margin: -8px;

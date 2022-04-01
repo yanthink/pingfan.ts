@@ -18,7 +18,7 @@ nav:
 
 <API src="./Editor.tsx" hideTitle></API>
 
-#### previewOptions
+#### PreviewOptions
 
 <API src="./Preview.tsx" hideTitle></API>
 
@@ -42,7 +42,8 @@ nav:
 | getMarkdown | 获取 markdown 内容 | `() => string` |
 | setMarkdown | 设置 markdown 内容 | `(markdown: string) => void` |
 | debounceSetMarkdown | 消抖设置 markdown 内容 | `(markdown: string) => void` |
+| setMarkdownOptions | 设置 [react-markdown 选项](https://github.com/remarkjs/react-markdown) | `(markdownOptions: Partial<ReactMarkdownOptions>) => void` |
 | getContainer | 获取预览容器DOM | <code>() => HTMLDivElement &#124; null</code> |
-| getHast | 获取hast | () => Hast |
+| getHast | 获取hast | `() => Hast` |
 
 [codemirror6 文档](https://codemirror.net/6/)

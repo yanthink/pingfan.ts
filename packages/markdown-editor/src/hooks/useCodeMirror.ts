@@ -17,15 +17,15 @@ export interface UseCodeMirrorProps {
   /**
    * @description 高度
    */
-  height?: string;
+  height?: number | string;
   /**
    * @description 最小高度
    */
-  minHeight?: string;
+  minHeight?: number | string;
   /**
    * @description 最大高度
    */
-  maxHeight?: string;
+  maxHeight?: number | string;
   /**
    * @description [codemirror 扩展](https://codemirror.net/6/)
    */
@@ -40,6 +40,10 @@ export interface UseCodeMirrorProps {
    * @description 状态更新时的回调
    */
   onUpdate?(viewUpdate: ViewUpdate): void;
+}
+
+function strSuffix(str: number | string, suffix: string = 'px'): string {
+  return str ? String(str).replace(new RegExp(`(${suffix})?\s*$`, 'i'), suffix) : '';
 }
 
 export default (props: UseCodeMirrorProps) => {
@@ -59,33 +63,35 @@ export default (props: UseCodeMirrorProps) => {
   onChangeRef.current = onChange;
   onUpdateRef.current = onUpdate;
 
-  const extensions = useMemo(
-    () =>
-      (props.extensions || []).concat([
-        keymap.of([
-          { key: 'Tab', run: commands.indent, shift: commands.indentLess },
-          { key: 'Mod-b', run: commands.bold },
-          { key: 'Mod-i', run: commands.italic },
-          { key: 'Mod-h', run: commands.heading },
-          { key: 'Mod-Alt-i', run: commands.image },
-          { key: "Mod-'", run: commands.quote },
-          { key: 'Mod-Alt-c', run: commands.code },
-          { key: 'Mod-l', run: commands.unorderedList },
-          { key: 'Mod-Alt-l', run: commands.orderedList },
-        ]),
-        markdown({ codeLanguages: languages, base: markdownLanguage }),
-        EditorView.theme({ '&': { height, minHeight, maxHeight } }),
-        EditorView.updateListener.of((viewUpdate) => {
-          if (viewUpdate.docChanged) {
-            const value = viewUpdate.state.doc.toString();
-            onChangeRef.current?.(value, viewUpdate);
-          }
-          onUpdateRef.current?.(viewUpdate);
-        }),
-        // todo placeholder 会导致起始位置无法输入中文
+  const extensions = useMemo(() => {
+    return (props.extensions || []).concat([
+      keymap.of([
+        { key: 'Tab', run: commands.indent, shift: commands.indentLess },
+        { key: 'Mod-b', run: commands.bold },
+        { key: 'Mod-i', run: commands.italic },
+        { key: 'Mod-h', run: commands.heading },
+        { key: 'Mod-Alt-i', run: commands.image },
+        { key: 'Mod-\'', run: commands.quote },
+        { key: 'Mod-Alt-c', run: commands.code },
+        { key: 'Mod-l', run: commands.unorderedList },
+        { key: 'Mod-Alt-l', run: commands.orderedList },
       ]),
-    [height, minHeight, minHeight, props.extensions],
-  );
+      markdown({ codeLanguages: languages, base: markdownLanguage }),
+      EditorView.theme({
+        '&': { height: strSuffix(height) },
+        ...(height ? { '.cm-scroller': { overflow: 'auto' } } : {}),
+        '.cm-content, .cm-gutter': { minHeight: strSuffix(minHeight), maxHeight: strSuffix(maxHeight) },
+      }),
+      EditorView.updateListener.of((viewUpdate) => {
+        if (viewUpdate.docChanged) {
+          const value = viewUpdate.state.doc.toString();
+          onChangeRef.current?.(value, viewUpdate);
+        }
+        onUpdateRef.current?.(viewUpdate);
+      }),
+      // todo placeholder 会导致起始位置无法输入中文
+    ]);
+  }, [height, minHeight, minHeight, props.extensions]);
 
   // reconfigure
   useEffect(() => {

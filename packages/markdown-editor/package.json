@@ -1,6 +1,6 @@
 {
   "name": "@pingfan.ts/markdown-editor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于 codemirror6 的 markdown 编辑器",
   "author": "yanthink <yanthink911@qq.com>",
   "homepage": "",
@@ -74,5 +74,6 @@
   },
   "resolutions": {
     "@types/react": "^16.14.2"
-  }
+  },
+  "gitHead": "9ec72d37e6de52632e64e1b1f7baafd6bcb2344e"
 }

@@ -53,6 +53,7 @@ export default () => {
   return (
     <Editor
       ref={editorRef}
+      height={300}
       value={value}
       onChange={setValue}
       extensions={extensions}

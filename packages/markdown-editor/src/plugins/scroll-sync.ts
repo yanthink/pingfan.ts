@@ -80,6 +80,7 @@ export default (editorRef: MutableRefObject<EditorInstance | null>, previewInter
       if (isNaN(to)) {
         for (let j = i + 1; j < children.length; j++) {
           to = children[j].position?.start?.offset;
+          if (!isNaN(to)) break;
         }
       }
 

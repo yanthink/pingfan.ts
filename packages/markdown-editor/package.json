@@ -45,7 +45,6 @@
     "react": ">= 16.8.0"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.7.0",
     "@codemirror/basic-setup": "^0.19.1",
     "@codemirror/commands": "^0.19.6",
     "@codemirror/lang-markdown": "^0.19.3",

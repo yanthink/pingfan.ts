@@ -4,17 +4,17 @@ import Editor, { EditorInstance } from '@pingfan.ts/markdown-editor';
 import upload from '@pingfan.ts/markdown-editor/es/plugins/upload';
 import scrollSync from '@pingfan.ts/markdown-editor/es/plugins/scroll-sync';
 import type { ToolbarButton } from '@pingfan.ts/markdown-editor/es/Toolbar';
-import SmileOutlined from '@ant-design/icons/SmileOutlined';
+import SmileSvg from '@pingfan.ts/markdown-editor/es/svg/smile';
 import remarkEmoji from '@pingfan.ts/remark-emoji';
 import RcTrigger from 'rc-trigger';
 import EmojiPicker from '@pingfan.ts/emoji-picker';
 import emojiToolkit from 'emoji-toolkit';
 import 'rc-trigger/assets/index.css';
-import 'emoji-assets/sprites/joypixels-sprite-32.min.css'; // 需要安装 emoji-asset@^6.6.0
+import 'emoji-assets/sprites/joypixels-sprite-32.min.css'; // 需要安装 emoji-assets@^6.6.0
 import './emoji.css';
 
 // 全局设置
-emojiToolkit.sprites = true; // sprites = true 需要安装 emoji-asset@^6.6.0 依赖并引入 emoji-asset 对应的 css 样式
+emojiToolkit.sprites = true; // sprites = true 需要安装 emoji-assets@^6.6.0 依赖并引入 emoji-assets 对应的 css 样式
 emojiToolkit.spriteSize = '32';
 
 const placements = {
@@ -76,7 +76,7 @@ export default () => {
         builtinPlacements={placements}
         popup={
           <EmojiPicker
-            // sprites = true 需要引入 emoji-asset 对应的 css 样式
+            // sprites = true 需要引入 emoji-assets 对应的 css 样式
             emojiToolkit={{ sprites: true, spriteSize: '32' }}
             onSelect={(emoji) => {
               const editorView = editorRef.current?.getEditorView();
@@ -92,7 +92,9 @@ export default () => {
           />
         }
       >
-        <SmileOutlined className="pf-mde-button" />
+        <span className="pf-mde-button">
+          <SmileSvg viewBox="64 64 896 896" width="1em" height="1em" fill="currentcolor" focusable="false" />
+        </span>
       </RcTrigger>
     ),
   };

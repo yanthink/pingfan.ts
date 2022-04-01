@@ -29,7 +29,6 @@ import Editor, { EditorInstance } from '@pingfan.ts/markdown-editor';
 import upload from '@pingfan.ts/markdown-editor/es/plugins/upload';
 import scrollSync from '@pingfan.ts/markdown-editor/es/plugins/scroll-sync';
 import markdown from './markdown.txt';
-import './index.css';
 
 export default () => {
   const editorRef = useRef<EditorInstance | null>(null);

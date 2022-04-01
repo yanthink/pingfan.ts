@@ -1,24 +1,23 @@
 import React, { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import classnames from 'classnames';
 import type { KeyBinding } from '@codemirror/view';
-import Icon from '@ant-design/icons';
-import UndoOutlined from '@ant-design/icons/UndoOutlined';
-import RedoOutlined from '@ant-design/icons/RedoOutlined';
-import BoldOutlined from '@ant-design/icons/BoldOutlined';
-import ItalicOutlined from '@ant-design/icons/ItalicOutlined';
-import StrikethroughOutlined from '@ant-design/icons/StrikethroughOutlined';
-import NumberOutlined from '@ant-design/icons/NumberOutlined';
-import TableOutlined from '@ant-design/icons/TableOutlined';
-import LineOutlined from '@ant-design/icons/LineOutlined';
-import UnorderedListOutlined from '@ant-design/icons/UnorderedListOutlined';
-import OrderedListOutlined from '@ant-design/icons/OrderedListOutlined';
-import LinkOutlined from '@ant-design/icons/LinkOutlined';
-import PictureOutlined from '@ant-design/icons/PictureOutlined';
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
-import SplitCellsOutlined from '@ant-design/icons/SplitCellsOutlined';
-import FullscreenOutlined from '@ant-design/icons/FullscreenOutlined';
-import CodeSvg from './svg/code';
+import UndoSvg from './svg/undo';
+import RedoSvg from './svg/redo';
+import BoldSvg from './svg/bold';
+import ItalicSvg from './svg/italic';
+import StrikethroughSvg from './svg/strikethrough';
+import NumberSvg from './svg/number';
 import QuoteSvg from './svg/quote';
+import CodeSvg from './svg/code';
+import TableSvg from './svg/table';
+import LineSvg from './svg/line';
+import UnorderedListSvg from './svg/unordered-list';
+import OrderedListSvg from './svg/ordered-list';
+import LinkSvg from './svg/link';
+import PictureSvg from './svg/picture';
+import EyeSvg from './svg/eye';
+import SplitCellsSvg from './svg/split-cells';
+import FullscreenSvg from './svg/fullscreen';
 import * as commands from './commands';
 import './Toolbar.less';
 
@@ -55,9 +54,9 @@ export type ToolbarButton =
   | BuiltInButton
   | '|'
   | {
-      type: BuiltInButton | '|' | 'custom';
-      render?: () => React.ReactNode;
-    };
+  type: BuiltInButton | '|' | 'custom';
+  render?: () => React.ReactNode;
+};
 
 export interface ToolbarProps {
   /**
@@ -151,24 +150,31 @@ const Toolbar = forwardRef<ToolbarInstance, ToolbarProps>(({ buttons, onButtonCl
   };
 
   const renderBuiltInButton = (type: BuiltInButton) => {
+    const svgProps = {
+      viewBox: '64 64 896 896',
+      width: '1em',
+      height: '1em',
+      fill: 'currentcolor',
+      focusable: 'false',
+    };
     const iconBinding: { [type in BuiltInButton]: React.ReactNode } = {
-      undo: <UndoOutlined />,
-      redo: <RedoOutlined />,
-      bold: <BoldOutlined />,
-      italic: <ItalicOutlined />,
-      strikethrough: <StrikethroughOutlined />,
-      heading: <NumberOutlined />,
-      quote: <Icon component={QuoteSvg} />,
-      code: <Icon component={CodeSvg} />,
-      table: <TableOutlined />,
-      line: <LineOutlined />,
-      unorderedList: <UnorderedListOutlined />,
-      orderedList: <OrderedListOutlined />,
-      link: <LinkOutlined />,
-      image: <PictureOutlined />,
-      preview: <EyeOutlined />,
-      editorPreview: <SplitCellsOutlined />,
-      fullScreen: <FullscreenOutlined />,
+      undo: <UndoSvg data-icon="bold" {...svgProps} />,
+      redo: <RedoSvg data-icon="redo" {...svgProps} />,
+      bold: <BoldSvg data-icon="bold" {...svgProps} />,
+      italic: <ItalicSvg data-icon="italic" {...svgProps} />,
+      strikethrough: <StrikethroughSvg data-icon="strikethrough" {...svgProps} />,
+      heading: <NumberSvg data-icon="heading" {...svgProps} />,
+      quote: <QuoteSvg data-icon="quote" {...svgProps} />,
+      code: <CodeSvg data-icon="code" {...svgProps} />,
+      table: <TableSvg data-icon="table" {...svgProps} />,
+      line: <LineSvg data-icon="line" {...svgProps} />,
+      unorderedList: <UnorderedListSvg data-icon="unordered-list" {...svgProps} />,
+      orderedList: <OrderedListSvg data-icon="ordered-list" {...svgProps} />,
+      link: <LinkSvg data-icon="link" {...svgProps} />,
+      image: <PictureSvg data-icon="image" {...svgProps} />,
+      preview: <EyeSvg data-icon="preview" {...svgProps} />,
+      editorPreview: <SplitCellsSvg data-icon="editor-preview" {...svgProps} />,
+      fullScreen: <FullscreenSvg data-icon="fullScreen" {...svgProps} />,
     };
     const titleBinding: { [type in BuiltInButton]?: string } = {
       undo: '撤销',
